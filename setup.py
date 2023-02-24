@@ -56,7 +56,7 @@ setup(
     },
     license="MIT",
     keywords="seglines",
-    install_requires=["requests", "pydantic"],
+    install_requires=["matplotlib", "numpy"],
     entry_points={
         "console_scripts": [
             "seglines = seglines:main",
