@@ -48,46 +48,39 @@ def segmented_least_squares(X, Y, L):
     return OPT
 
 
-def plot(OPT, X, Y, L):
+def plot(OPT, X, Y, L, fname):
     XMIN = -1
     XMAX = len(X) + 1
     YMIN = -5
     YMAX = max(Y) + 5
     counter = 0
-    for l in range(1, L + 1):
-        for i in range(1, len(X) + 1):
-            print(l, i, OPT[l, i])
-            opt = OPT[l, i]
-            plt.clf()
-            hasplot = False
-            plt.xlim(XMIN, XMAX)
-            plt.ylim(YMIN, YMAX)
-            _opt_str = f"{round(opt.opt,1)}"
-            label = f"L={l}, i={i}, opt={_opt_str.ljust(8)}"
-            plt.plot(X[:i], Y[:i], "o", markersize=4, c="blue", label=label)
-            plt.plot(X[i:], Y[i:], "o", markersize=2, c="black")
-            plt.legend(loc="upper right")
-            while opt.l > 0:
-                x1, y1 = opt.pre, Y[max(0, opt.pre)]
-                x2, y2 = opt.i - 1, Y[max(0, opt.i - 1)]
-                print((x1, round(y1, 1)), (x2, round(y2, 1)))
-                plt.plot((x1, x2), (y1, y2))
-                opt = OPT[opt.l - 1, opt.pre]
-                hasplot = True
+    l = L
+    i = len(X)
+    print(l, i, OPT[l, i])
+    opt = OPT[l, i]
+    plt.xlim(XMIN, XMAX)
+    plt.ylim(YMIN, YMAX)
+    _opt_str = f"{round(opt.opt,1)}"
+    label = f"L={l}, i={i}, opt={_opt_str.ljust(8)}"
+    plt.plot(X[:i], Y[:i], "o", markersize=4, c="blue", label=label)
+    plt.plot(X[i:], Y[i:], "o", markersize=2, c="black")
+    plt.legend(loc="upper right")
+    while opt.l > 0:
+        x1, y1 = opt.pre, Y[max(0, opt.pre)]
+        x2, y2 = opt.i - 1, Y[max(0, opt.i - 1)]
+        print((x1, round(y1, 1)), (x2, round(y2, 1)))
+        plt.plot((x1, x2), (y1, y2))
+        opt = OPT[opt.l - 1, opt.pre]
 
-            if hasplot:
-                counter += 1
-                plt.savefig(f"abc{counter:03d}.png")
+    plt.savefig(f"{fname}.png")
 
 
-def main(data, L):
-    N = len(data)
-    X, Y = zip(*data)
+def solve(X, Y, L):
+    N = len(X)
     print("Y = " + " ".join([str(round(e, 1)) for e in list(Y)]))
     OPT = segmented_least_squares(X, Y, L)
-    plot(OPT, X, Y, L)
-    ### optimal value
     print(OPT[L, N])
+    return OPT
 
 
 def _read(stream):
@@ -98,13 +91,19 @@ def _read(stream):
     return data
 
 
+def main(fname, L):
+    data = []
+    with open(sys.argv[2], "r") as fin:
+        data = _read(fin)
+    X, Y = zip(*data)
+    OPT = solve(X, Y, L)
+    plot(OPT, X, Y, L, fname.split(".")[0])
+
+
 if __name__ == "__main__":
     import sys
 
     if len(sys.argv) != 3:
         exit("usage: segmented-least-squares.py L myfile.csv (L is number of segments)")
     L = int(sys.argv[1])
-    data = []
-    with open(sys.argv[2], "r") as fin:
-        data = _read(fin)
-    main(data, L)
+    main(sys.argv[2], L)
