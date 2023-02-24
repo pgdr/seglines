@@ -91,19 +91,10 @@ def _read(stream):
     return data
 
 
-def main(fname, L):
+def run(fname, L):
     data = []
-    with open(sys.argv[2], "r") as fin:
+    with open(fname, "r") as fin:
         data = _read(fin)
     X, Y = zip(*data)
     OPT = solve(X, Y, L)
     plot(OPT, X, Y, L, fname.split(".")[0])
-
-
-if __name__ == "__main__":
-    import sys
-
-    if len(sys.argv) != 3:
-        exit("usage: segmented-least-squares.py L myfile.csv (L is number of segments)")
-    L = int(sys.argv[1])
-    main(sys.argv[2], L)

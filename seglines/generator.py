@@ -6,7 +6,7 @@ def generate(l, k, n):
     X = np.array(range(n))
     _yarr = list(range(1, k + 1))
     _act_y = []
-    for i in range(L):
+    for i in range(l):
         tmp = []
         offset = random.randint(1, 5)
         for e in _yarr:
