@@ -16,7 +16,8 @@ def generate(l, k, n):
         _act_y += tmp
     Y = np.array(_act_y)
     for i in range(n):
-        print(X[i], round(Y[i], 5))
+        x, y = X[i], round(Y[i], 5)
+        print(f"{x},{y}")
 
 
 if __name__ == "__main__":

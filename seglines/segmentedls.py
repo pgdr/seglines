@@ -81,20 +81,3 @@ def solve(X, Y, L):
     OPT = segmented_least_squares(X, Y, L)
     print(OPT[L, N])
     return OPT
-
-
-def _read(stream):
-    data = []
-    for l in stream:
-        x, y = map(float, l.split())
-        data.append((x, y))
-    return data
-
-
-def run(fname, L):
-    data = []
-    with open(fname, "r") as fin:
-        data = _read(fin)
-    X, Y = zip(*data)
-    OPT = solve(X, Y, L)
-    plot(OPT, X, Y, L, fname.split(".")[0])

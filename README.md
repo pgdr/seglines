@@ -10,6 +10,8 @@ Compute segmented least squares for a dataset.  Probably assumes that `X = 1...N
 
 **Usage:**
 
+`seglines --help`
+
 `seglines l data.csv`
 
 
@@ -23,3 +25,8 @@ and then
 `seglines 5 data.csv`
 
 This outputs the segments, and also writes a file `data.csv` for your convenience.
+
+To create a plot of the dataset, add `--plot`:
+
+
+`seglines 5 data.csv --plot`
