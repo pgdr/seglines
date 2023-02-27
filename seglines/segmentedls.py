@@ -2,24 +2,24 @@ import numpy as np
 import matplotlib.pyplot as plt
 from collections import defaultdict as D
 from collections import namedtuple as T
-import random
 
-Solution = T("Solution", "opt i l pre")
-
-
-def sol(opt, i, l, pre):
-    return Solution(round(opt, 2), i, l, pre)  # please never round
+Solution = T("Solution", "opt i l pre slope")
 
 
-sol0 = sol(0, 0, 0, 0)
-VINF = sol(float("inf"), 0, 0, 0)
+def sol(opt, i, l, pre, slope):
+    return Solution(opt, i, l, pre, slope)  # please never round
+
+
+sol0 = sol(0, 0, 0, 0, None)
+VINF = sol(float("inf"), 0, 0, 0, None)
 
 
 def _lstsq(x, y):
     A = np.vstack([x, np.ones(len(x))]).T
     lstsq = np.linalg.lstsq(A, y, rcond=None)
+    lstsq_sol = lstsq[0]
     residuals = lstsq[1]
-    return np.sum(residuals)
+    return np.sum(residuals), lstsq_sol
 
 
 def segmented_least_squares(X, Y, L):
@@ -27,8 +27,8 @@ def segmented_least_squares(X, Y, L):
 
     ## Base case for one line
     for i in range(len(X) + 1):
-        sse = _lstsq(X[:i], Y[:i])
-        OPT[1, i] = sol(sse, i, 1, 0)
+        sse, lstsol = _lstsq(X[:i], Y[:i])
+        OPT[1, i] = sol(sse, i, 1, 0, lstsol)
 
     ## Base for 1 point
     for l in range(2, L + 1):
@@ -40,11 +40,11 @@ def segmented_least_squares(X, Y, L):
     for l in range(1, L + 1):
         for i in range(1, len(X) + 1):
             for j in range(0, i - 1):
-                sse = _lstsq(X[j:i], Y[j:i])  # cost of line from j to i
+                sse, lstsol = _lstsq(X[j:i], Y[j:i])  # cost of line from j to i
                 pre = OPT[l - 1, j]  # one fewer line, ending at j
                 this = pre.opt + sse
                 if this < OPT[l, i].opt:
-                    OPT[l, i] = sol(this, i, l, j)
+                    OPT[l, i] = sol(this, i, l, j, lstsol)
     return OPT
 
 
