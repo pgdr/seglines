@@ -26,6 +26,6 @@ if __name__ == "__main__":
     if len(sys.argv) != 3:
         exit("Usage: generator l k, e.g. generator 3 5")
     L = int(sys.argv[1])
-    k = int(sys.argv[2])
-    N = L * k
-    generate(L, k, N)
+    k_ = int(sys.argv[2])
+    N = L * k_
+    generate(L, k_, N)
