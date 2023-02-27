@@ -7,7 +7,7 @@ from .segmentedls import solve, plot
 
 def _read(fname):
     data = []
-    with open(fname, "r") as fin:
+    with open(fname, "r", encoding="utf8") as fin:
         csvreader = csv.reader(fin)
         for row in csvreader:
             x, y = map(float, row)
