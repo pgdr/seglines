@@ -53,10 +53,8 @@ def plot(OPT, X, Y, L, fname):
     XMAX = len(X) + 1
     YMIN = -5
     YMAX = max(Y) + 5
-    counter = 0
     l = L
     i = len(X)
-    print(l, i, OPT[l, i])
     opt = OPT[l, i]
     plt.xlim(XMIN, XMAX)
     plt.ylim(YMIN, YMAX)
@@ -68,7 +66,6 @@ def plot(OPT, X, Y, L, fname):
     while opt.l > 0:
         x1, y1 = opt.pre, Y[max(0, opt.pre)]
         x2, y2 = opt.i - 1, Y[max(0, opt.i - 1)]
-        print((x1, round(y1, 1)), (x2, round(y2, 1)))
         plt.plot((x1, x2), (y1, y2))
         opt = OPT[opt.l - 1, opt.pre]
 
@@ -76,8 +73,5 @@ def plot(OPT, X, Y, L, fname):
 
 
 def solve(X, Y, L):
-    N = len(X)
-    print("Y = " + " ".join([str(round(e, 1)) for e in list(Y)]))
     OPT = segmented_least_squares(X, Y, L)
-    print(OPT[L, N])
     return OPT

@@ -34,7 +34,6 @@ def exit_with_usage(error=0):
 
 def main():
     args = [e for e in sys.argv]
-    print(args)
 
     if "-h" in args or "--help" in args:
         exit_with_usage()
