@@ -6,7 +6,7 @@ from setuptools import setup
 
 
 __pgdr = "PG Drange <Pal.Drange@uib.no>"
-__source = "https://github.com/pgdr/cristin"
+__source = "https://github.com/pgdr/seglines"
 __webpage = __source
 __description = "Segmented Least Squares"
 
