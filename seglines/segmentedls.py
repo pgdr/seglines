@@ -1,5 +1,4 @@
 import numpy as np
-import matplotlib.pyplot as plt
 from collections import defaultdict as D
 from collections import namedtuple as T
 
@@ -49,6 +48,7 @@ def segmented_least_squares(X, Y, L):
 
 
 def plot(OPT, X, Y, L, fname):
+    import matplotlib.pyplot as plt
     XMIN = -1
     XMAX = len(X) + 1
     YMIN = -5
