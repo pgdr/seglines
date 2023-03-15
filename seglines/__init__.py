@@ -2,7 +2,8 @@ import sys
 import csv
 from ._version import __version__ as version
 from .generator import generate
-from .segmentedls import solve, plot
+from .segmentedls import solve
+from .plotting import plot
 
 
 def _read(fname):
