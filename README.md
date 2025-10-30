@@ -22,7 +22,7 @@ segment 10: 126 (16.780)    139 (3.190)     f(x) = -1.036·x + 147.696
 
 `pip install seglines`
 
-Depends only on `numpy`.  When using `--plot`, we also need `matplotlib`.
+When using `--plot`, we need `matplotlib`, can be installed with `pip install seglines[plot]`.
 
 
 ## Usage
