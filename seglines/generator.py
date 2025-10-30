@@ -1,9 +1,8 @@
 import random
-import numpy as np
 
 
 def generate(l, k, n):
-    X = np.array(range(n))
+    X = list(range(1, 1 + n))
     _yarr = list(range(1, k + 1))
     _act_y = []
     for i in range(l):
@@ -14,7 +13,7 @@ def generate(l, k, n):
         if random.random() > 0.5:
             tmp = reversed(tmp)
         _act_y += tmp
-    Y = np.array(_act_y)
+    Y = list(_act_y)
     for i in range(n):
         x, y = X[i], round(Y[i], 5)
         print(f"{x},{y}")
@@ -24,7 +23,9 @@ if __name__ == "__main__":
     import sys
 
     if len(sys.argv) != 3:
-        exit("Usage: generator l k, e.g. generator 3 5")
+        exit(
+            "Usage: generator l k, e.g. generator 3 5 (generates 3·5=15 points)"
+        )
     L = int(sys.argv[1])
     k_ = int(sys.argv[2])
     N = L * k_

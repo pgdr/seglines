@@ -10,7 +10,10 @@ def _fit_points(f, x1, x2):
 
 
 def plot(OPT, X, Y, L, fname):
-    import matplotlib.pyplot as plt
+    try:
+        import matplotlib.pyplot as plt
+    except ImportError:
+        exit("Missing dependency: matplotlib")
 
     XMIN = -1
     XMAX = len(X) + 1
@@ -29,12 +32,13 @@ def plot(OPT, X, Y, L, fname):
     plt.legend(loc="upper right")
 
     # Plot slopes (going from right to left)
-    while opt.l > 0:
+    while opt.k > 0:
         f = opt.slope
         x1 = opt.pre
         x2 = opt.i - 1
         plt.plot((x1, x2), _fit_points(f, x1, x2))
 
-        opt = OPT[opt.l - 1, opt.pre]
+        opt = OPT[opt.k - 1, opt.pre]
 
     plt.savefig(f"{fname}.png")
+    print(f"saved to {fname}.png")

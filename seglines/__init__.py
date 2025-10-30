@@ -25,39 +25,44 @@ def run(fname, L, do_plot=False):
     data = _read(fname)
     X, Y = zip(*data)
     OPT = solve(X, Y, L)
-    if do_plot:
-        plot(OPT, X, Y, L, fname.split(".")[0])
-
-    N = len(X)
-
-    l = L
+    k = L
     i = len(X)
 
-    opt = OPT[l, i]
+    opt = OPT[k, i]
     print(f"opt = {opt.opt:.2f}")
 
     segments = []
 
     digits_ = len(str(i))
 
-    while opt.l > 0:
+    while opt.k > 0:
         x1, y1 = opt.pre, Y[max(0, opt.pre)]
         x2, y2 = opt.i - 1, Y[max(0, opt.i - 1)]
-        segments.append(((x1, round(y1, 2)), (x2, round(y2, 2)), opt.slope))
-        opt = OPT[opt.l - 1, opt.pre]
+        segments.append(
+            ((x1, round(y1, 2)), (x2, round(y2, 2)), opt.slope)
+        )
+        opt = OPT[opt.k - 1, opt.pre]
 
     for idx, (start, end, slope) in enumerate(reversed(segments)):
         s, s_val = start
         e, e_val = end
         slope_str = _slope_to_str(slope)
         print(f"segment {idx+1:2}: ", end="")
-        print(f"{s:{digits_}} ({s_val:.3f})".ljust(digits_ + 13), end="")
-        print(f"{e:{digits_}} ({e_val:.3f})".ljust(digits_ + 13), end="")
+        print(
+            f"{s:{digits_}} ({s_val:.3f})".ljust(digits_ + 13), end=""
+        )
+        print(
+            f"{e:{digits_}} ({e_val:.3f})".ljust(digits_ + 13), end=""
+        )
         print(slope_str)
+    if do_plot:
+        plot(OPT, X, Y, L, fname.split(".")[0])
 
 
 def exit_with_usage(error=0):
-    print("seglines\n\nCompute segmented least squares on your dataset.\n")
+    print(
+        "seglines\n\nCompute segmented least squares on your dataset.\n"
+    )
     print("usage: seglines L myfile.csv (L is number of segments)")
     print("       seglines L myfile.csv --plot")
     print("       seglines --generate k l")

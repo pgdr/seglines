@@ -56,7 +56,10 @@ setup(
     },
     license="MIT",
     keywords="seglines",
-    install_requires=["matplotlib", "numpy"],
+    install_requires=[],
+    extras_require={
+        "plot": ["matplotlib"],
+    },
     entry_points={
         "console_scripts": [
             "seglines = seglines:main",
